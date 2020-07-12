@@ -11,11 +11,11 @@
 export TELEGRAM_TOKEN=${BOT_API_TOKEN}
 
 # Some misc enviroment vars
-DEVICE=X00TD
+DEVICE=X00T
 CIPROVIDER=CircleCI
 
 # Clone our AnyKernel3 branch to KERNELDIR
-git clone https://github.com/Danish1999/AnyKernel3 anykernel3
+git clone https://github.com/Danish1999/AnyKernel3 -b nishant anykernel3
 export ANYKERNEL=$(pwd)/anykernel3
 
 # Parse git things
@@ -41,14 +41,14 @@ elif [[ "${PARSE_BRANCH}" =~ "ten"* ]]; then
 else
 	# Dunno when this will happen but we will cover, just in case
 	KERNELTYPE=${PARSE_BRANCH}
-	KERNELNAME="Vortex-${KERNELRELEASE}-${PARSE_BRANCH}-$(date +%y%m%d-%H%M)"
+	KERNELNAME="SMOKEY-${KERNELRELEASE}-${PARSE_BRANCH}-$(date +%y%m%d-%H%M)"
 fi
 
 export KERNELTYPE KERNELNAME
 
 # Workaround for long af kernel strings
-git config --global user.name "Danish1999"
-git config --global user.email "danish01031999@gmail.com"
+git config --global user.name "nishant3417"
+git config --global user.email "nishant3417kamboj@gmail.com"
 git add .
 git commit -m "stop adding dirty"
 
@@ -70,10 +70,10 @@ tg_channelcast() {
 }
 
 # Let's announce our naisu new kernel!
-tg_groupcast "Vortex compilation clocked at $(date +%Y%m%d-%H%M)!"
+tg_groupcast "Smokey compilation clocked at $(date +%Y%m%d-%H%M)!"
 tg_channelcast "Compiler: <code>${COMPILER_STRING}</code>" \
 	"Device: <b>${DEVICE}</b>" \
-	"Kernel: <code>Vortex, release ${KERNELRELEASE}</code>" \
+	"Kernel: <code>Smokey, release ${KERNELRELEASE}</code>" \
 	"Branch: <code>${PARSE_BRANCH}</code>" \
 	"Commit point: <code>${COMMIT_POINT}</code>" \
 	"Under <code>${CIPROVIDER}</code>" \
@@ -87,7 +87,7 @@ START=$(date +"%s")
 
 mkdir ${KERNELDIR}/out
 
-make O=out ARCH=arm64 X00TD_defconfig
+make O=out ARCH=arm64 X00T_defconfig
 if [[ "${COMPILER_TYPE}" =~ "clang"* ]]; then
         make -j"${JOBS}" CC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- O=out ARCH=arm64
 elif [[ "${COMPILER_TYPE}" =~ "GCC9"* ]]; then
